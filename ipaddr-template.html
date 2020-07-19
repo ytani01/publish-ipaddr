@@ -2,10 +2,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport"
-          content="width=devicewidth, initial-scale=1, maximum-scale=3">
+          content="width=devicewidth, initial-scale=1, maximum-scale=4">
   </head>
   <body>
-    <h1>OttoPi</h1>
-    <a href="http://{{ ipaddr }}:{{ port }}/">{{ ipaddr }}:{{ port }}</a>
+    <h1>{{ title }}</h1>
+    <header>
+    </header>
+    <main>
+      {{ text1 }}
+      <h2><a href="http://{{ ipaddr }}{{ port }}/">{{ ipaddr }}{{ port }}</a></h2>
+      {{ text2 }}
+    </main>
+    <footer>
+    </footer>
   </body>
 </html>

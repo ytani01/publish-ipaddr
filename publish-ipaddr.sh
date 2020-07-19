@@ -75,13 +75,13 @@ publish_html() {
     fi
 
     _CMDLINE="$SCP_CMD $_OBJ $DST"
-    tseval $_CMDLINE
+    #tseval $_CMDLINE
+    eval $_CMDLINE
 }
 
 #########################################
 # main
 #
-tsecho "TEMPLATE_PATH=$TEMPLATE_PATH"
 if [ ! -f $TEMPLATE_PATH ]; then
     tsecho "$TEMPLATE_PATH: no such file"
     exit 1
@@ -112,16 +112,18 @@ for ip in $IPADDRS; do
     fi
 
     mk_html $OBJ_PATH "$TITLE" "$ip" "$PORT" "$TEXT1" "$TEXT2"
-    if [ $? -ne 0 ]; then
-        tsecho "ERROR($?)"
+    RET=$?
+    if [ $RET -ne 0 ]; then
+        tsecho "ERROR($RET)"
         exit 1
     fi
 
     publish_html $OBJ_PATH
-    if [ $? -ne 0 ]; then
-        tsecho "ERROR($?)"
+    RET=$?
+    if [ $RET -ne 0 ]; then
+        tsecho "ERROR($RET)"
         exit 1
     fi
 
-    #rm -v $OBJ_PATH
+    rm $OBJ_PATH
 done

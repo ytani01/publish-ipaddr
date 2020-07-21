@@ -6,7 +6,8 @@ MYNAME=`basename $0`
 MYDIR=`dirname $0`
 #########################################
 
-DST="ytani@ssh.ytani.net:public_html/iot"
+#DST="ytani@ssh.ytani.net:public_html/iot"
+DST=
 
 #########################################
 # variables
@@ -31,7 +32,7 @@ KEYWD_TEXT2="{{ text2 }}"
 #
 usage () {
     echo
-    echo "    usage: ${MYNAME} [-t title(hostname)] [-p port] [-s template] [text1] [text2]"
+    echo "    usage: ${MYNAME} [-t title(hostname)] [-p port] [-s template] [-1 test1] [-2 text2] scp_dst"
     echo
 }
 
@@ -89,11 +90,13 @@ fi
 
 IPADDRS=`ifconfig -a | grep inet | grep -v inet6 | grep -v '127.0.0.1' | sed 's/^ *//' | cut -d ' ' -f 2`
 
-while getopts t:p:h:f:s: OPT; do
+while getopts t:p:h:f:s:1:2: OPT; do
     case $OPT in
         t) TITLE=$OPTARG ;;
         p) PORT=$OPTARG ;;
         s) TEMPLATE_PATH=$OPTARG ;;
+        1) TEXT1=$OPTARG ;;
+        2) TEXT2=$OPTARG ;;
         *) usage
            exit 1
            ;;
@@ -101,8 +104,12 @@ while getopts t:p:h:f:s: OPT; do
 done
 shift `expr $OPTIND - 1`
 
-TEXT1=$1
-TEXT2=$2
+DST=$1
+
+if [ -z "$DST" -o -n "$2" ]; then
+    usage
+    exit 1
+fi
 
 for ip in $IPADDRS; do
     if [ -z "$PORT" ]; then

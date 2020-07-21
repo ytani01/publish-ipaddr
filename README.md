@@ -9,5 +9,5 @@ scpコマンドで転送します。
 ## usage
 
 ``` bash
-$ publish-ipaddr.sh [-t title(hostname)] [-p port] [-s template] [text1] [text2]
+$ publish-ipaddr.sh [-t title(hostname)] [-p port] [-s template] [-1 text1] [-2 text2] scp_dst
 ```
